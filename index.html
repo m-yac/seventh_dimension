@@ -330,9 +330,12 @@
 
         function getUrlParams() {
             const params = new URLSearchParams(window.location.search);
+            const run = params.get('run');
+            const headband = params.get('headband');
+            
             return {
-                run: parseInt(params.get('run')) || 0,
-                headband: parseInt(params.get('headband')) || 3
+                run: run !== null ? parseInt(run) : 0,
+                headband: headband !== null ? parseInt(headband) : 3
             };
         }
 
@@ -431,9 +434,25 @@
             };
         }
 
-        function getRandomFortune(category) {
+        function getRandomFortune(category, brainwaves, mlAnalysis) {
             const categoryFortunes = fortunes[category] || fortunes.balanced;
-            return categoryFortunes[Math.floor(Math.random() * categoryFortunes.length)];
+            
+            // Create a deterministic seed based on the brainwave and ML values
+            const seed = Math.round(
+                (brainwaves.alpha * 1000) + 
+                (brainwaves.beta * 2000) + 
+                (brainwaves.gamma * 3000) + 
+                (brainwaves.delta * 4000) + 
+                (brainwaves.theta * 5000) +
+                (mlAnalysis.focus * 6000) +
+                (mlAnalysis.clear * 7000) +
+                (mlAnalysis.meditation * 8000) +
+                (mlAnalysis.dream * 9000)
+            );
+            
+            // Use the seed to pick a deterministic fortune
+            const index = seed % categoryFortunes.length;
+            return categoryFortunes[index];
         }
 
         function openCookie(fortune, brainwaves, mlAnalysis) {
@@ -481,6 +500,7 @@
         async function generateFortune() {
             try {
                 const urlParams = getUrlParams();
+                console.log('URL Params:', urlParams); // Debug log
                 
                 const response = await fetch('https://bq3lmawgx4.execute-api.us-east-2.amazonaws.com/query_seventh_dimension_ITP_camp', {
                     method: 'POST',
@@ -523,7 +543,7 @@
                 
                 // Get appropriate fortune based on both brainwaves and ML analysis
                 const dominantPattern = getDominantPattern(brainwaves, mlAnalysis);
-                const fortune = getRandomFortune(dominantPattern);
+                const fortune = getRandomFortune(dominantPattern, brainwaves, mlAnalysis);
                 
                 // Wait a moment then open the cookie
                 setTimeout(() => {
