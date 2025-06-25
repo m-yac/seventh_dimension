@@ -41,9 +41,10 @@
             border-radius: 20px;
             padding: 3rem 2rem;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.3);
+            border: 3px solid rgba(255,255,255,0.3);
             position: relative;
             overflow: hidden;
+            transition: background 0.8s ease, border-color 0.8s ease;
         }
 
         .cookie-closed {
@@ -328,6 +329,27 @@
             ]
         };
 
+        function getHeadbandColors(headbandNumber) {
+            const colors = {
+                1: { light: 'rgba(255, 165, 0, 0.15)', saturated: '#FF8C00' }, // Orange
+                2: { light: 'rgba(255, 20, 147, 0.15)', saturated: '#FF1493' }, // Pink
+                3: { light: 'rgba(30, 144, 255, 0.15)', saturated: '#1E90FF' }, // Blue
+                4: { light: 'rgba(34, 139, 34, 0.15)', saturated: '#228B22' }, // Green
+                5: { light: 'rgba(255, 215, 0, 0.15)', saturated: '#FFD700' }, // Yellow
+                6: { light: 'rgba(138, 43, 226, 0.15)', saturated: '#8A2BE2' }  // Purple
+            };
+            
+            return colors[headbandNumber] || colors[3]; // Default to blue if invalid
+        }
+
+        function updateHeadbandStyling(headbandNumber) {
+            const colors = getHeadbandColors(headbandNumber);
+            const fortuneCookie = document.getElementById('fortuneCookie');
+            
+            fortuneCookie.style.background = `linear-gradient(135deg, ${colors.light}, rgba(255, 255, 255, 0.95))`;
+            fortuneCookie.style.borderColor = colors.saturated;
+        }
+
         function getUrlParams() {
             const params = new URLSearchParams(window.location.search);
             const run = params.get('run');
@@ -501,6 +523,12 @@
             try {
                 const urlParams = getUrlParams();
                 console.log('URL Params:', urlParams); // Debug log
+                
+                // Update styling based on headband
+                updateHeadbandStyling(urlParams.headband);
+                
+                // Update loading text to mention headband
+                document.getElementById('loadingText').textContent = `Reading your brainwaves from headband ${urlParams.headband}...`;
                 
                 const response = await fetch('https://bq3lmawgx4.execute-api.us-east-2.amazonaws.com/query_seventh_dimension_ITP_camp', {
                     method: 'POST',
