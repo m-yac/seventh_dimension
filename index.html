@@ -346,7 +346,7 @@
             const colors = getHeadbandColors(headbandNumber);
             const fortuneCookie = document.getElementById('fortuneCookie');
             
-            fortuneCookie.style.background = `linear-gradient(135deg, ${colors.light}, rgba(255, 255, 255, 0.95))`;
+            fortuneCookie.style.background = `linear-gradient(135deg, ${colors.light}, rgba(255, 255, 255, 1.0))`;
             fortuneCookie.style.borderColor = colors.saturated;
         }
 
@@ -386,9 +386,9 @@
                 return 'linear-gradient(45deg, #d299c2, #fef9d7, #667eea, #764ba2)';
             }
             
-            // Fall back to brainwave-based colors
-            const { alpha, beta, gamma, delta, theta } = brainwaves;
-            const dominant = Math.max(alpha, beta, gamma, delta, theta);
+            // Fall back to brainwave-based colors (excluding delta)
+            const { alpha, beta, gamma, theta } = brainwaves;
+            const dominant = Math.max(alpha, beta, gamma, theta); // Note: delta excluded
             
             // Alpha - calm, peaceful blues and greens
             if (alpha === dominant) return 'linear-gradient(45deg, #74b9ff, #0984e3, #00b894, #00cec9)';
@@ -398,9 +398,6 @@
             
             // Gamma - transcendent purples and pinks
             if (gamma === dominant) return 'linear-gradient(45deg, #a29bfe, #6c5ce7, #fd79a8, #fdcb6e)';
-            
-            // Delta - deep, restful dark blues
-            if (delta === dominant) return 'linear-gradient(45deg, #2d3436, #636e72, #74b9ff, #0984e3)';
             
             // Theta - creative, intuitive greens and blues
             if (theta === dominant) return 'linear-gradient(45deg, #00b894, #00cec9, #55a3ff, #74b9ff)';
@@ -424,9 +421,9 @@
             if (clear === mlMax && clear > 0.7) return 'high_clear';
             if (dream === mlMax && dream > 0.7) return 'high_dream';
             
-            // Fall back to brainwave patterns
-            const { alpha, beta, gamma, delta, theta } = brainwaves;
-            const waves = { alpha, beta, gamma, delta, theta };
+            // Fall back to brainwave patterns (excluding delta)
+            const { alpha, beta, gamma, theta } = brainwaves;
+            const waves = { alpha, beta, gamma, theta }; // Note: delta excluded
             
             let maxWave = 'balanced';
             let maxValue = 0;
