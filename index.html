@@ -331,12 +331,12 @@
 
         function getHeadbandColors(headbandNumber) {
             const colors = {
-                1: { light: 'rgba(255, 165, 0, 0.15)', saturated: '#FF8C00' }, // Orange
-                2: { light: 'rgba(255, 20, 147, 0.15)', saturated: '#FF1493' }, // Pink
-                3: { light: 'rgba(30, 144, 255, 0.15)', saturated: '#1E90FF' }, // Blue
-                4: { light: 'rgba(34, 139, 34, 0.15)', saturated: '#228B22' }, // Green
-                5: { light: 'rgba(255, 215, 0, 0.15)', saturated: '#FFD700' }, // Yellow
-                6: { light: 'rgba(138, 43, 226, 0.15)', saturated: '#8A2BE2' }  // Purple
+                1: { light: 'rgba(255, 180, 120, 1.0)', saturated: '#FF8C00' }, // Orange - more saturated
+                2: { light: 'rgba(255, 160, 200, 1.0)', saturated: '#FF1493' }, // Pink - more saturated
+                3: { light: 'rgba(160, 200, 255, 1.0)', saturated: '#1E90FF' }, // Blue - more saturated
+                4: { light: 'rgba(160, 220, 160, 1.0)', saturated: '#228B22' }, // Green - more saturated
+                5: { light: 'rgba(255, 230, 120, 1.0)', saturated: '#FFD700' }, // Yellow - more saturated
+                6: { light: 'rgba(200, 160, 230, 1.0)', saturated: '#8A2BE2' }  // Purple - more saturated
             };
             
             return colors[headbandNumber] || colors[3]; // Default to blue if invalid
