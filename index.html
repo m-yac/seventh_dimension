@@ -284,7 +284,7 @@
             high_beta: [
                 "Your sharp focus will lead to breakthrough discoveries.",
                 "Analytical thinking is your superpower today. Use it wisely.",
-                "Problem-solving comes naturally to you right now."
+                "Problem-solving will come naturally to you today."
             ],
             high_gamma: [
                 "Your consciousness is expanding. Prepare for profound insights.",
@@ -292,8 +292,8 @@
                 "Your awareness transcends ordinary limits today."
             ],
             high_delta: [
-                "Deep healing energies surround you. Rest and rejuvenate.",
-                "Your subconscious holds the key to transformation.",
+                "Deep healing energies surround you. It's time to rest and rejuvenate.",
+                "Your subconscious will hold the key to your transformation.",
                 "Profound changes are occurring beneath the surface."
             ],
             high_theta: [
@@ -308,19 +308,19 @@
             ],
             // ML analysis-based fortunes
             high_focus: [
-                "Your laser-sharp concentration pierces through complexity.",
-                "The universe aligns with your unwavering attention.",
-                "Focus is your gateway to extraordinary achievements."
+                "Your concentration will pierce through your toughest challenges.",
+                "The universe will align itself with you.",
+                "Focus will be your gateway to extraordinary achievements."
             ],
             high_clear: [
-                "Mental clarity illuminates your path forward.",
-                "Your thoughts flow like crystal-clear water.",
-                "Clarity of mind brings clarity of purpose."
+                "Only through mental clarity will your path forward be clear.",
+                "Rest will make your thoughts will flow like crystal-clear water.",
+                "Clarity of mind will bring you clarity of purpose."
             ],
             high_meditation: [
-                "🕉️ You have achieved a rare state of transcendence.",
-                "🧘‍♂️ The cosmos whispers its deepest secrets to you.",
-                "✨ Your meditative awareness touches the infinite."
+                "You have already achieved transcendence.",
+                "The cosmos will whisper its deepest secrets to you.",
+                "Your meditative awareness will bring you to the infinite."
             ],
             high_dream: [
                 "Your subconscious weaves visions of tomorrow.",
@@ -562,10 +562,6 @@
                     dream: data.dream || 0
                 };
                 
-                // Change background based on both brainwaves and ML analysis
-                document.body.style.background = getBackgroundColor(brainwaves, mlAnalysis);
-                document.body.style.backgroundSize = '400% 400%';
-                
                 // Get appropriate fortune based on both brainwaves and ML analysis
                 const dominantPattern = getDominantPattern(brainwaves, mlAnalysis);
                 const fortune = getRandomFortune(dominantPattern, brainwaves, mlAnalysis);
@@ -573,6 +569,9 @@
                 // Wait a moment then open the cookie
                 setTimeout(() => {
                     openCookie(fortune, brainwaves, mlAnalysis);
+                    // Change background based on both brainwaves and ML analysis
+                    document.body.style.background = getBackgroundColor(brainwaves, mlAnalysis);
+                    document.body.style.backgroundSize = '400% 400%';
                 }, 1500);
                 
             } catch (error) {
