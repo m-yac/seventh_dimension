@@ -1,0 +1,305 @@
+/* Water caustics font and base styling */
+@font-face {
+    font-family: cmu;
+    src: url('./water-caustics/cmunss.ttf');
+}
+
+/* OKLCh color variables for perceptual uniformity */
+:root {
+    --border-chroma: 0.2;    /* Saturation/colorfulness for borders */
+    --text-chroma: 0.1;      /* Saturation/colorfulness for text */
+    --border-lightness: 0.75; /* Perceptual lightness for borders */
+    --text-lightness: 0.9;   /* Perceptual lightness for text */
+    --border-alpha: 0.4;
+    --text-alpha: 1.0;
+}
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: cmu, 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    background: #000;
+    color: white;
+    overflow-y: auto;
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* Canvas for water caustics background */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+}
+
+.loading-dots {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    color: rgba(255, 255, 255, 0.8);
+    z-index: 20;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
+
+.container {
+    text-align: center;
+    padding: 1rem;
+    max-width: 1000px;
+    width: 95%;
+    position: relative;
+    z-index: 10;
+    margin: auto;
+}
+
+.data-panel {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 20px;
+    padding: 2rem;
+    backdrop-filter: blur(15px) contrast(66.66667%) saturate(1.5);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    color: white;
+}
+
+.bottom-title {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.bottom-title h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+    letter-spacing: 0.5px;
+}
+
+.fortune-section {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.fortune-message {
+    font-size: 1.4rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.brainwave-section, .ml-section {
+    margin-bottom: 2rem;
+}
+
+.brainwave-section:last-child, .ml-section:last-child {
+    margin-bottom: 0;
+}
+
+.brainwave-section h4, .ml-section h4 {
+    margin: 0 0 1rem 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: 0.3px;
+}
+
+.brainwave-grid, .ml-grid {
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.wave-stat, .analysis-stat {
+    padding: 1rem 0.8rem;
+    border-radius: 12px;
+    min-width: 110px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.04);
+    flex: 1;
+    text-align: center;
+    color: white;
+}
+
+.wave-name, .analysis-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.3px;
+}
+
+.wave-value, .analysis-value {
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-family: 'Monaco', 'Consolas', monospace;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.wave-description, .analysis-description {
+    font-size: 0.9rem;
+    line-height: 1.3;
+    font-weight: 500;
+}
+
+.wave-viz {
+    margin-bottom: 0.5rem;
+    opacity: 0.8;
+}
+
+.wave-path {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* OKLCh border and text color classes with perceptual uniformity */
+.red-bg { border-color: oklch(var(--border-lightness) var(--border-chroma) 30 / var(--border-alpha));; }
+.red-bg .wave-value, .red-bg .analysis-value { color: oklch(var(--text-lightness) var(--text-chroma) 30); }
+
+.orange-bg { border-color: oklch(var(--border-lightness) var(--border-chroma) 60 / var(--border-alpha));; }
+.orange-bg .wave-value, .orange-bg .analysis-value { color: oklch(var(--text-lightness) var(--text-chroma) 60); }
+
+.yellow-bg { border-color: oklch(var(--border-lightness) var(--border-chroma) 100 / var(--border-alpha));; }
+.yellow-bg .wave-value, .yellow-bg .analysis-value { color: oklch(var(--text-lightness) var(--text-chroma) 100); }
+
+.cyan-bg { border-color: oklch(var(--border-lightness) var(--border-chroma) 200 / var(--border-alpha));; }
+.cyan-bg .wave-value, .cyan-bg .analysis-value { color: oklch(var(--text-lightness) var(--text-chroma) 200); }
+
+.green-bg { border-color: oklch(var(--border-lightness) var(--border-chroma) 140 / var(--border-alpha));; }
+.green-bg .wave-value, .green-bg .analysis-value { color: oklch(var(--text-lightness) var(--text-chroma) 140); }
+
+.blue-bg { border-color: oklch(var(--border-lightness) var(--border-chroma) 250 / var(--border-alpha));; }
+.blue-bg .wave-value, .blue-bg .analysis-value { color: oklch(var(--text-lightness) var(--text-chroma) 250); }
+
+.purple-bg { border-color: oklch(var(--border-lightness) var(--border-chroma) 300 / var(--border-alpha));; }
+.purple-bg .wave-value, .purple-bg .analysis-value { color: oklch(var(--text-lightness) var(--text-chroma) 300); }
+
+
+.value-display {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    font-family: 'Monaco', 'Consolas', monospace;
+    letter-spacing: 0.5px;
+}
+
+/* Tablet responsive adjustments */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .brainwave-grid, .ml-grid {
+        gap: 0.8rem;
+    }
+    
+    .wave-stat, .analysis-stat {
+        min-width: 140px;
+        flex: 1 1 calc(33.333% - 0.6rem);
+    }
+}
+
+/* Small tablet adjustments */
+@media (max-width: 900px) and (min-width: 769px) {
+    .brainwave-grid {
+        justify-content: center;
+    }
+    
+    .brainwave-grid .wave-stat:nth-child(4),
+    .brainwave-grid .wave-stat:nth-child(5) {
+        flex: 1 1 calc(50% - 0.4rem);
+    }
+}
+
+/* Mobile responsive design */
+@media (max-width: 768px) {
+    .container {
+        padding: 0.5rem;
+        width: 100%;
+        max-width: none;
+    }
+    
+    .data-panel {
+        padding: 1rem;
+        margin: 0;
+    }
+    
+    .loading-dots {
+        font-size: 1.5rem;
+    }
+    
+    .fortune-message {
+        font-size: 1.1rem;
+        padding: 0.5rem;
+    }
+    
+    .brainwave-grid, .ml-grid {
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+    }
+    
+    .wave-stat, .analysis-stat {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+        text-align: left;
+    }
+    
+    .wave-viz {
+        flex-shrink: 0;
+        margin-bottom: 0;
+    }
+    
+    .wave-value, .analysis-value {
+        flex-shrink: 0;
+        font-size: 1.1rem;
+        min-width: 3rem;
+        text-align: center;
+        margin-bottom: 0;
+    }
+    
+    .wave-info, .analysis-info {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    
+    .wave-name, .analysis-name {
+        margin-bottom: 0;
+        font-size: 0.95rem;
+        font-weight: 600;
+    }
+    
+    .wave-description, .analysis-description {
+        font-size: 0.8rem;
+        line-height: 1.2;
+    }
+    
+    .brainwave-section, .ml-section {
+        margin-bottom: 1.5rem;
+    }
+    
+    .fortune-section {
+        margin-bottom: 1.5rem;
+    }
+}
